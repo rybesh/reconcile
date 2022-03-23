@@ -14,3 +14,4 @@ run: $(PYTHON)
 
 clean:
 	rm -rf venv
+	rm -f secrets/token.json
