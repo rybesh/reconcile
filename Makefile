@@ -9,7 +9,7 @@ $(PYTHON): requirements.txt
 
 .PHONY: run clean
 
-run: $(PYTHON)
+run: | $(PYTHON)
 	./reconcile.py
 
 clean:
