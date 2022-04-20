@@ -6,6 +6,7 @@ $(PYTHON): requirements.txt
 	$(PYTHON) -m pip install --upgrade pip
 	$(PYTHON) -m pip install wheel
 	$(PYTHON) -m pip install -r requirements.txt
+	touch $(PYTHON)
 
 .PHONY: run clean
 
