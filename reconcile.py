@@ -47,7 +47,9 @@ RELEASE_ID = re.compile(r"release/(\d+)")
 
 
 def parse_release_id(url: str) -> int:
-    return int(RELEASE_ID.search(url).group(1))
+    match = RELEASE_ID.search(url)
+    assert match is not None
+    return int(match.group(1))
 
 
 def parse_year(s: str) -> Optional[int]:
@@ -90,7 +92,9 @@ def get_sheet_releases(sheet: str) -> dict[str, tuple[str, str, Optional[int], s
 
 @sleep_and_retry
 @limits(calls=1, period=1)
-def call_api(client: httpx.Client, endpoint: str, params: dict = {}) -> dict:
+def call_api(client: httpx.Client, endpoint: str, params: dict | None = None) -> dict:
+    if params is None:
+        params = {}
     r = client.get(
         API + endpoint,
         params=params,
@@ -106,8 +110,10 @@ def call_api(client: httpx.Client, endpoint: str, params: dict = {}) -> dict:
 
 
 def paginate(
-    client: httpx.Client, endpoint: str, key: str, params: dict = {}
+    client: httpx.Client, endpoint: str, key: str, params: dict | None = None
 ) -> Generator[dict, None, None]:
+    if params is None:
+        params = {}
     params["page"] = 1
     params["per_page"] = 100
     while True:
