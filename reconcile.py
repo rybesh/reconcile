@@ -85,7 +85,7 @@ def get_sheet_releases(sheet: str) -> dict[str, tuple[str, str, Optional[int], s
                 f"A{row}",
             )
         else:
-            print("No Discogs URL:\n")
+            print("\nNo Discogs URL:\n")
             print(f"{artist} - {release}")
     return releases
 
